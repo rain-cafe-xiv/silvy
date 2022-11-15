@@ -5,7 +5,6 @@ export default function About() {
         <div>
             <Head>
                 <title>About · Silvy</title>
-                <link rel="icon" href="/favicon.ico" />
             </Head>
         </div>
     )

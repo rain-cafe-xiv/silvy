@@ -7,7 +7,7 @@ export type StratPageProps = {
     id: string;
 }
 
-export default function StratPage({
+export function StratPage({
     id
 }: StratPageProps) {
     const strat = mockStrat({

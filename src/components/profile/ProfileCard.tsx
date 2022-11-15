@@ -1,19 +1,19 @@
+import { User } from '@prisma/client';
 import { Direction } from '../../constants/components';
-import { Author } from '../../types/author';
 import { Avatar } from '../common/Avatar';
 import { Card } from '../common/Card';
 import { PronounsViewer } from '../common/Pronouns';
 import { Typography } from '../common/Typography';
-import styles from './AuthorCard.module.scss';
+import styles from './ProfileCard.module.scss';
 
-interface AuthorCardProps {
-    author: Author;
+interface ProfileCardProps {
+    user: User;
 }
 
-export function AuthorCard({
-    author,
+export function ProfileCard({
+    user,
     ...extraProps
-}: AuthorCardProps) {
+}: ProfileCardProps) {
     return (
         <Card
             className={styles.card}
@@ -23,12 +23,12 @@ export function AuthorCard({
         >
             <div className={styles.name}>
                 <Typography as='h1'>
-                    {author.name}
+                    {user.name}
                 </Typography>
-                <PronounsViewer pronouns={author.pronouns}/>
+                <PronounsViewer pronouns={user.pronouns}/>
             </div>
             <Avatar
-                src={author.image}
+                src={user.image}
                 size={90}
             />
         </Card>

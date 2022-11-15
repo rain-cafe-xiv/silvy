@@ -6,6 +6,7 @@
   "author": "Ceci <admin@cecilias.me>",
   "license": "GPL-3.0",
   "scripts": {
+    "postinstall": "netlify link --name rain-silvy",
     "start": "next dev",
     "start:prod": "next start",
     "build": "next build",
@@ -13,7 +14,8 @@
     "pull": "netlify env:list --json > .env.json",
     "test": "jest --coverage=false",
     "test:coverage": "jest --coverage",
-    "deploy:database": "prisma migrate deploy"
+    "deploy:database": "npm run deploy:database:live && prisma generate",
+    "deploy:database:live": "prisma db push"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -31,7 +33,8 @@
     "react-icons": "^4.6.0",
     "react-polymorphic-types": "^2.0.0",
     "react-redux": "^8.0.5",
-    "swr": "^1.3.0"
+    "swr": "^1.3.0",
+    "wretch": "^2.1.5"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.0.3",
@@ -53,6 +56,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
+    "netlify-cli": "^12.1.1",
     "sass": "^1.56.1",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",

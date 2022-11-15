@@ -1,30 +1,49 @@
+import { Pronouns } from '@prisma/client';
+import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { pronounsApiModule } from '../../pages/api/pronouns';
+import { userApiModule } from '../../pages/api/user';
+import { humanizePronounsList } from '../../utils/pronouns';
 import { useReadOnlyCachedState } from '../hooks/use-cached-state';
-import styles from './Avatar.module.scss';
+import { Badge } from './Badge';
+import styles from './Pronouns.module.scss';
 
-export type PronounsProps = {
-    pronouns: string[];
+export type PronounsViewerProps = {
+    pronouns: number[];
+    validPronouns: Pronouns[];
 }
 
-export function Pronouns({
-    pronouns: externalPronouns
-}: PronounsProps): JSX.Element {
-    const pronouns = useReadOnlyCachedState(() => {
-        let formattedPronouns: string[];
-        if (externalPronouns.length === 1) {
-            formattedPronouns = externalPronouns[0].split('/');
-        } else {
-            formattedPronouns = externalPronouns.reduce((output, pronoun) => {
-                output.push(pronoun.split('/')[0])
-                return output;
-            }, []);
-        }
-
-        return formattedPronouns.join(' / ');
-    }, [externalPronouns]);
+export function PronounsViewer({
+    pronouns,
+    validPronouns: externalValidPronouns
+}: PronounsViewerProps): JSX.Element {
+    console.log(externalValidPronouns);
+    // const pronounsList = useReadOnlyCachedState(() => {
+    //     return humanizePronounsList(externalValidPronouns);
+    // }, [externalValidPronouns]);
 
     return (
         <div className={styles.pronouns}>
-            {pronouns}
+            {/* {pronouns.map((pronouns) => (
+                <Badge>
+                    {pronouns}
+                </Badge>
+            ))} */}
         </div>
     )
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<Partial<PronounsViewerProps>>> {
+    try {
+        const pronouns = await pronounsApiModule.get();
+
+        // Pass data to the page via props
+        return { props: { validPronouns: pronouns } };
+    } catch (error) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: '/'
+            }
+        };
+    }
 }

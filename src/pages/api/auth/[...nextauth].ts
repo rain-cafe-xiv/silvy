@@ -19,7 +19,18 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.DISCORD_CLIENT_SECRET,
             checks: ['state']
         })
-    ]
+    ],
+    callbacks: {
+        session: async ({ session, token }) => {
+            if (session?.user) {
+                session.user.id = token.sub;
+            }
+            return session;
+        }
+    },
+    session: {
+        strategy: 'jwt'
+    }
 }
 
 export default NextAuth(authOptions)

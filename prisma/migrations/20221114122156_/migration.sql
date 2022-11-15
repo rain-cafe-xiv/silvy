@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "Pronouns" AS ENUM ('FAE_FAER_FAERS', 'HE_HIM_HIS', 'SHE_HER_HERS', 'THEY_THEM_THEIRS', 'XE_XIR_XIRS', 'ZE_ZIR_ZIRS');
+
 -- CreateTable
 CREATE TABLE "Account" (
     "id" TEXT NOT NULL,
@@ -29,10 +32,11 @@ CREATE TABLE "Session" (
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
-    "name" TEXT,
-    "email" TEXT,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
     "emailVerified" TIMESTAMP(3),
-    "image" TEXT,
+    "image" TEXT NOT NULL,
+    "pronouns" "Pronouns"[] DEFAULT ARRAY['THEY_THEM_THEIRS']::"Pronouns"[],
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

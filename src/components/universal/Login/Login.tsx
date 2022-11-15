@@ -1,4 +1,4 @@
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 import {IoMdLogOut, IoMdLogIn} from 'react-icons/io';
 import styles from './Login.module.scss';
 import { Alignment, Animations, Sizes } from '../../../constants/components';
@@ -7,11 +7,14 @@ import { Avatar } from '../../common/Avatar';
 import { Popover, PopoverItem } from '../../common/Popover';
 import { IconButton } from '../../common/Button/IconButton';
 import { CreatePopover } from './CreatePopover';
+import Link from 'next/link';
+import { useAppSelector } from '../../../store';
+import { selectUser } from '../../../features/user';
 
 export default function Login() {
-    const { data: session } = useSession();
+    const user = useAppSelector(selectUser);
 
-    if (session) {
+    if (user) {
         return (
             <>
                 <CreatePopover/>
@@ -22,11 +25,14 @@ export default function Login() {
                         className={styles.discord}
                         size={Sizes.MEDIUM}
                     >
-                        <Avatar src={session.user.image} />
-                        {session.user.name}
+                        <Avatar src={user.image} />
+                        {user.name}
                     </Button>}
                 >
-                    <PopoverItem>
+                    <PopoverItem
+                        as={Link}
+                        href='/profile'
+                    >
                         Profile
                     </PopoverItem>
                     <PopoverItem
