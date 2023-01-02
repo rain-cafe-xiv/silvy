@@ -47,7 +47,7 @@
     "@typescript-eslint/parser": "^5.42.1",
     "chance": "^1.1.9",
     "convert-json-env": "^1.1.2",
-    "eslint": "^8.27.0",
+    "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-react": "^7.31.10",
     "identity-obj-proxy": "^3.0.0",
